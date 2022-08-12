@@ -34,6 +34,9 @@ head.innerHTML += `
     margin-bottom: 10px;
     text-align: center;
 }
+#g_id_onload {
+    margin-top: 10px;
+}
 </style>
 `;
 
@@ -54,11 +57,20 @@ main.innerHTML += `
     </div>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <div id="g-oauth2" class="g-signin2" data-onsuccess="onSignIn"></div>
+
+    <div id="g_id_onload"
+         data-client_id="787978846326-o0ga2jcldj7d9dh38aacbf5b8a9qhfl1.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+
   </form>
 `;
 
-function onSignIn(usr) {
+
+
+function handleCredentialResponse(usr) {
+    console.log("handler");
     window.location.replace("main.html");
 }
 
