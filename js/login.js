@@ -34,11 +34,14 @@ head.innerHTML += `
     margin-bottom: 10px;
     text-align: center;
 }
-#g_id_onload {
-    margin-top: 10px;
-}
 .error-msg{
     color: red;
+}
+#google-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
 }
 </style>
 `;
@@ -63,11 +66,17 @@ main.innerHTML += `
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 
-    <div id="g_id_onload"
-         data-client_id="787978846326-o0ga2jcldj7d9dh38aacbf5b8a9qhfl1.apps.googleusercontent.com"
-         data-callback="handleCredentialResponse">
+    <div id="google-btn">
+        <div id="g_id_onload"
+            data-client_id="787978846326-o0ga2jcldj7d9dh38aacbf5b8a9qhfl1.apps.googleusercontent.com"
+            data-callback="handleCredentialResponse">
+        </div>
+        <div class="g_id_signin" 
+            data-type="standard" 
+            data-theme="filled_black" 
+            data-size="large">
+        </div>
     </div>
-    <div class="g_id_signin" data-type="standard"></div>
 
   </form>
 `;
