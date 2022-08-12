@@ -37,6 +37,9 @@ head.innerHTML += `
 #g_id_onload {
     margin-top: 10px;
 }
+.error-msg{
+    color: red;
+}
 </style>
 `;
 
@@ -50,10 +53,12 @@ main.innerHTML += `
     <div class="form-floating">
       <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
       <label for="floatingInput">Email address</label>
+      <span class="error-msg"></span>
     </div>
     <div class="form-floating">
       <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
       <label for="floatingPassword">Password</label>
+      <span class="error-msg"></span>
     </div>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
@@ -70,7 +75,6 @@ main.innerHTML += `
 
 
 function handleCredentialResponse(usr) {
-    console.log("handler");
     window.location.replace("main.html");
 }
 
@@ -80,18 +84,26 @@ submit_btn.addEventListener("click", function(event) {
 
     const pass = document.getElementById("floatingPassword");
     const email = document.getElementById("floatingInput");
-    let valid = true;
+    let errors = [];
+
     if (email.value === "") {
         email.style.border = "1px solid red";
-        email.nextElementSibling.insertAdjacentHTML("afterend", `<span style="color: red;"">Email is required</span>`);
-        valid = false;
+        const email_span = email.nextElementSibling.nextElementSibling; 
+        email_span.innerText = "Email is required";
+        errors.push([email, email_span]);
     }
     if (pass.value === "") {
         pass.style.border = "1px solid red";
-        pass.nextElementSibling.insertAdjacentHTML("afterend", `<span style="color: red;">Password is required</span>`);
-        valid = false;
+        const pass_span = pass.nextElementSibling.nextElementSibling; 
+        pass_span.innerText = "Password is required";
+        errors.push([pass, pass_span]);
     }
-    if (valid) {
+    if (errors.length === 0) {
         window.location.replace("main.html");
+    } else {
+        setTimeout(()=> { errors.forEach( (err) => {
+            err[0].style.border = "1px solid #ced4da";
+            err[1].innerText = "";
+        })}, 3000);
     }
 });
