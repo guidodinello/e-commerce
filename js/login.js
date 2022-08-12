@@ -54,13 +54,18 @@ main.innerHTML += `
     </div>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <div id="g-oauth2" class="g-signin2" data-onsuccess="onSignIn"></div>
   </form>
 `;
+
+function onSignIn(usr) {
+    window.location.replace("main.html");
+}
 
 const submit_btn = document.querySelectorAll("button[type=submit]")[0];
 submit_btn.addEventListener("click", function(event) {
     event.preventDefault();
+
     const pass = document.getElementById("floatingPassword");
     const email = document.getElementById("floatingInput");
     let valid = true;
