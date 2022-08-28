@@ -1,6 +1,15 @@
 
 function handleCredentialResponse(usr) {
     window.location.replace("main.html");
+    
+    // https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions
+    const responsePayload = decodeJwtResponse(usr.credential);
+
+    localStorage.setItem("usrPicture", responsePayload.picture);
+    localStorage.setItem("usrEmail", responsePayload.email);
+
+    console.log(localStorage.getItem("usrEmail"));
+    console.log(localStorage.setItem("usrPicture"));
 }
 
 const submit_btn = document.querySelector("button[type=submit]");
@@ -24,6 +33,7 @@ submit_btn.addEventListener("click", function(event) {
         errors.push([pass, pass_span]);
     }
     if (errors.length === 0) {
+        localStorage.setItem("usrEmail", email.value);
         window.location.replace("main.html");
     } else {
         setTimeout(()=> { errors.forEach( (err) => {

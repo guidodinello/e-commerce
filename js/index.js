@@ -11,4 +11,14 @@ document.addEventListener("DOMContentLoaded", function(){
         localStorage.setItem("catID", 103);
         window.location = "products.html"
     });
+
+    const picture = document.getElementById("nav-usrpicture");
+    if (localStorage.getItem("usrPicture") === null)
+        picture.src = "../img/img_perfil.png";
+    else
+        picture.src = localStorage.getItem("usrPicture");
+    document.getElementById("nav-usremail").innerText = localStorage.getItem("usrEmail");
+
+    console.log(localStorage.getItem("usrEmail"));
+
 });
