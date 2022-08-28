@@ -1,17 +1,3 @@
-function getProductsByCategoryName(cat_name){
-    return getJSONData(CATEGORIES_URL)
-    .then( (response) => {
-        // para cada cateogria del array de categorias recibido
-        for (let cat of response.data)
-            if (cat.name === cat_name)
-                // si coincide el nombre de la categoria se hace la peticion de los productos de la misma
-                return getJSONData(PRODUCTS_URL + cat.id + EXT_TYPE)
-                .then( (response) => {
-                    return response.data;
-                });
-    })
-}
-
 /*
 Nueva FUNCION
 */
@@ -53,19 +39,58 @@ function listProducts(container, products){
     }
 }
 
+function sortAndList(criteria, array) {
+    // ordena los productos segun cierto criterio y dsps los lista
+    currentCriteria = criteria;
+    if (array != undefined)
+        currentArray = array;
+    
+    current
+
+    listProducts(div_list, currentArray);
+}
+
+
+const ASC_BY_PRICE = "asc";
+const DESC_BY_PRICE = "desc";
+const ASC_BY_REL = "rel";
+let currentArray = [];
+let currentCriteria = undefined;
+let minCount = undefined;
+let maxCount = undefined;
+
 // obtenemos el contenedor donde va a ir la lista de productos
 const list_div = document.getElementById("product-list-container");
 
-// hacemos la peticion de los productos y los listamos en el contenedor hallado previamente
-getProductsByCategoryId(localStorage.getItem("catID"))
-.then( (response) => {
-    listProducts(list_div, response);
+document.addEventListener("DOMContentLoaded", function(e){
+    // se listan los productos de la categoria seleccionada al cargar la pagina
+    getProductsByCategoryId(localStorage.getItem("catID")).then( (response) => {
+            if (response.status === "ok"){
+                currentCategoriesArray = response.data
+                listProducts(list_div, response);
+            }
+    });
+
+    document.getElementById("asc-price").addEventListener("click", () => {
+        sortAndList(ASC_BY_PRICE);
+    });
+
+    document.getElementById("desc-price").addEventListener("click", () => {
+        sortAndList(DESC_BY_PRICE);
+    });
+
+	document.getElementById("relevance").addEventListener("click", () => {
+        sortAndList(ASC_REL_BY);
+    });
+
+	document.getElementById("filter-btn").addEventListener("click", () => {
+        
+    });
+
+	document.getElementById("clear-btn").addEventListener("click", () => {
+        
+    });
+
+
+
 });
-
-const asc_price = document.getElementById("asc-price");
-const desc_price = document.getElementById("desc-price");
-const relevance = document.getElementById("relevance");
-const filtrar = document.getElementById("filter-btn");
-const limpiar = document.getElementById("clear-btn");
-
-
