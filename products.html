@@ -55,18 +55,29 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
+                  <div class="col-lg col-md-12 mb-1 container">
                     <div class="row container p-0 m-0">
-                      <div class="col">
+                      <div class="col-4">
+                        <div class="input-group">
+                            <p id="search" class="font-weight-normal text-end my-2">Buscar</p>
+                            <div class="form-outline">
+                                <input id="search-input" type="search" id="form1" class="form-control" />
+                            </div>
+                            <button id="search-button" type="button" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                      </div>
+                      <div class="col col-lg-2">
                         <p class="font-weight-normal text-end my-2">Precio</p>
                       </div>
-                      <div class="col">
-                        <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin" min="0">
+                      <div class="col-2">
+                        <input class="form-control" type="number" placeholder="min." oninput="biggerThanZero(this)" id="rangeFilterCountMin"> 
                       </div>
-                      <div class="col">
-                        <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax" min="0">
+                      <div class="col-2">
+                        <input class="form-control" type="number" placeholder="máx." oninput="biggerThanZero(this)" id="rangeFilterCountMax">
                       </div>
-                      <div class="col-3 p-0">
+                      <div class="col-2 p-0">
                         <div class="btn-group" role="group">
                           <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
                           <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>

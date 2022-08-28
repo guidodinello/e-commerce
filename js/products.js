@@ -48,7 +48,7 @@ function productCard(p){
 function listProducts(container, products){
     // genera el contenedor de cada producto y lo agrega al div lista de productos
     container.innerHTML = "";
-    for (let product of products.products) {
+    for (let product of products) {
         container.innerHTML += productCard(product);
     }
 }
@@ -59,13 +59,60 @@ const list_div = document.getElementById("product-list-container");
 // hacemos la peticion de los productos y los listamos en el contenedor hallado previamente
 getProductsByCategoryId(localStorage.getItem("catID"))
 .then( (response) => {
-    listProducts(list_div, response);
+    listProducts(list_div, response.products);
 });
 
-const asc_price = document.getElementById("asc-price");
-const desc_price = document.getElementById("desc-price");
-const relevance = document.getElementById("relevance");
-const filtrar = document.getElementById("filter-btn");
-const limpiar = document.getElementById("clear-btn");
+const search = document.getElementById("search-input")
+
+const ascBtn = document.getElementById("sortAsc");
+const descBtn = document.getElementById("sortDesc");
+const relevanceBtn = document.getElementById("sortByCount");
+const limpiarBtn = document.getElementById("clearRangeFilter");
+
+const filtrarBtn = document.getElementById("rangeFilterCount");
+const maxBound = document.getElementById("rangeFilterCountMax");
+const minBound = document.getElementById("rangeFilterCountMin");
+
+
+ascBtn.addEventListener("click", () => {
+    listProducts(list_div, products.sort((a,b) => {
+        if (a.precio < b.precio) return 1;
+        if (a.precio > b.precio) return -1;
+        return 0;
+    }));
+});
+
+descBtn.addEventListener("click", () => {
+    
+});
+
+relevanceBtn.addEventListener("click", () => {
+    
+});
+
+limpiarBtn.addEventListener("click", () => {
+    minBound.value = "";
+    maxBound.value = "";
+});
+
+function biggerThanZero(input) {
+    if(input.value<0)input.value=0;
+}
+
+function errorMsg(container) {
+    container.style.border = "1px solid red";
+    setTimeout( () => {
+        container.style.border = "1px solid #ced4da";
+    },3000);
+}
+
+filtrarBtn.addEventListener("click", () => {
+    if (minBound.value > maxBound.value) {
+        errorMsg(minBound);
+        errorMsg(maxBound);
+    } else {
+
+    }
+});
 
 
