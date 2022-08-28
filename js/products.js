@@ -12,6 +12,16 @@ function getProductsByCategoryName(cat_name){
     })
 }
 
+/*
+Nueva FUNCION
+*/
+function getProductsByCategoryId(id){
+    return getJSONData(PRODUCTS_URL + id + EXT_TYPE)
+            .then( (response) => {
+                return response.data;
+            });
+}
+
 function productCard(p){
     /*
     La estructura se copio de categorires.html (modificando los atributos necesarios) para preservar el estilo de la pagina
@@ -46,8 +56,8 @@ function listProducts(container, products){
 // obtenemos el contenedor donde va a ir la lista de productos
 const list_div = document.getElementById("product-list-container");
 
-// hacemos la peticion de los autos y los listamos en el contenedor hallado previamente
-const autos = getProductsByCategoryName("Autos")
+// hacemos la peticion de los productos y los listamos en el contenedor hallado previamente
+getProductsByCategoryId(localStorage.getItem("catID"))
 .then( (response) => {
     listProducts(list_div, response);
 });
