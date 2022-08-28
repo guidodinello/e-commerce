@@ -1,7 +1,5 @@
 
-function handleCredentialResponse(usr) {
-    window.location.replace("main.html");
-    
+function handleCredentialResponse(usr) {    
     // https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions
     const responsePayload = decodeJwtResponse(usr.credential);
 
@@ -10,6 +8,8 @@ function handleCredentialResponse(usr) {
 
     console.log(localStorage.getItem("usrEmail"));
     console.log(localStorage.setItem("usrPicture"));
+
+    window.location.replace("main.html");
 }
 
 const submit_btn = document.querySelector("button[type=submit]");
