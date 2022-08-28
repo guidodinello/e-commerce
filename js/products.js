@@ -61,3 +61,11 @@ getProductsByCategoryId(localStorage.getItem("catID"))
 .then( (response) => {
     listProducts(list_div, response);
 });
+
+const asc_price = document.getElementById("asc-price");
+const desc_price = document.getElementById("desc-price");
+const relevance = document.getElementById("relevance");
+const filtrar = document.getElementById("filter-btn");
+const limpiar = document.getElementById("clear-btn");
+
+

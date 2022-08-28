@@ -44,6 +44,34 @@
         </div>
     
         <div class="row">
+            <div class="tool-bar">
+                <div class="criterios flex-row-container right">
+                    <div class="btn-group">
+                        <button id="desc-price" class="btn btn-secondary container-image-text">
+                                <img class="criterios-img" src="img/descending-order.png"/>
+                                <p class="bottom-right">$</p>
+                        </button>
+                        <button id="asc-price" class="btn btn-secondary container-image-text">
+                            <img class="criterios-img fa-rotate-180" src="img/descending-order.png"/>
+                            <p class="top-left">$</p>
+                        </button>
+                        <button id="relevance" class="btn btn-secondary container-image-text">
+                            <img class="criterios-img" src="img/descending-order.png"/>
+                            <p class="bottom-right">R</p>
+                        </button>
+                    </div>
+                </div>
+                <div class="filtros flex-row-container right">
+                    <p>Precio: </p>
+                    <label for="upper-price"></label>
+                    <input type="numeric" name="upper-price" min="0" value="2500">
+                    <label for="lower-price"></label>
+                    <input type="numeric" name="lower-price" min="0" value="1000">
+                    <button id="filter-btn" class="btn btn-primary" type="button">Filtrar</button>
+                    <button id="clear-btn" class="btn btn-info" type="button">Limpiar</button>
+                </div>
+            </div>
+
             <div class="list-group" id="product-list-container">
                 <!-- agregar listado de productos -->
             </div>
