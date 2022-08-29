@@ -165,8 +165,9 @@ document.addEventListener("DOMContentLoaded", function(e){
     const search = document.getElementById("search-input");
     search.addEventListener("input", () => {
         currentArray = arrayProducts.filter((element) => {
-            return  element.name.includes(search.value) ||
-                    element.description.includes(search.value);  
+            search = search.value.toLowerCase();
+            return  element.name.toLowerCase().includes(search) ||
+                    element.description.toLowerCase().includes(search);  
         });
         listProducts(list_div, currentArray);
     });
