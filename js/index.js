@@ -14,11 +14,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
     const picture = document.getElementById("nav-usrpicture");
     if (localStorage.getItem("usrPicture") === null)
-        picture.src = "../img/img_perfil.png";
+        picture.src = "img/img_perfil.png";
     else
         picture.src = localStorage.getItem("usrPicture");
     document.getElementById("nav-usremail").innerText = localStorage.getItem("usrEmail");
-
-    console.log(localStorage.getItem("usrEmail"));
 
 });

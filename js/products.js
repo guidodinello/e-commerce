@@ -34,6 +34,15 @@ function listProducts(container, products){
     for (let product of products) {
         container.innerHTML += productCard(product);
     }
+    // si no hay productos despliega un cartel avisando
+    if (products.length === 0) {
+        container.innerHTML +=  `
+        <div class="list-group-item list-group-item-action cursor-active">
+            <div class="row">
+                <p> No hay productos que cumplan con esas características </p>
+            </div>
+        </div>`
+    }
 }
 
 function sortProducts(criteria, array){
