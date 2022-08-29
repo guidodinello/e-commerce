@@ -30,7 +30,6 @@ function productCard(p){
 
 function listProducts(container, products){
     // genera el contenedor de cada producto y lo agrega al div lista de productos
-    console.log("productos",products);
     container.innerHTML = "";
     for (let product of products) {
         container.innerHTML += productCard(product);
@@ -164,10 +163,10 @@ document.addEventListener("DOMContentLoaded", function(e){
 
     const search = document.getElementById("search-input");
     search.addEventListener("input", () => {
+        const searchText = search.value.toLowerCase();
         currentArray = arrayProducts.filter((element) => {
-            search = search.value.toLowerCase();
-            return  element.name.toLowerCase().includes(search) ||
-                    element.description.toLowerCase().includes(search);  
+            return  element.name.toLowerCase().includes(searchText) ||
+                    element.description.toLowerCase().includes(searchText);  
         });
         listProducts(list_div, currentArray);
     });
