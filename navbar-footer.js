@@ -43,8 +43,5 @@ const footer = `  <footer class="text-muted">
 document.getElementsByTagName("main")[0].insertAdjacentHTML("afterend", footer);
 
 const picture = document.getElementById("nav-usrpicture");
-if (localStorage.getItem("usrPicture") === null)
-    picture.src = "img/img_perfil.png";
-else
-    picture.src = localStorage.getItem("usrPicture");
+picture.src = localStorage.getItem("usrPicture");
 document.getElementById("nav-usremail").innerText = localStorage.getItem("usrEmail");
