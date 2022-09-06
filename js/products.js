@@ -5,12 +5,17 @@ function getProductsByCategoryId(id){
             });
 }
 
+function setProductID(id) {
+    localStorage.setItem("productID", id);
+    window.location = "product-info.html"
+}
+
 function productCard(p){
     /*
     La estructura se copio de categorires.html (modificando los atributos necesarios) para preservar el estilo de la pagina
     */
     return `
-    <div class="list-group-item list-group-item-action cursor-active">
+    <div onclick=setProductID(${p.id}) class="list-group-item list-group-item-action cursor-active">
         <div class="row">
             <div class="col-3">
                 <img src="${p.image}"
