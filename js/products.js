@@ -42,9 +42,9 @@ function listProducts(container, products){
     // si no hay productos despliega un cartel avisando
     if (products.length === 0) {
         container.innerHTML +=  `
-        <div class="list-group-item list-group-item-action cursor-active">
+        <div class="list-group-item list-group-item-action cursor-active mt-3">
             <div class="row">
-                <p> No hay productos que cumplan con esas características </p>
+                <p class="m-0"> No hay productos que cumplan con esas características </p>
             </div>
         </div>`
     }
