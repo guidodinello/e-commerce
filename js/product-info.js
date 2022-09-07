@@ -5,17 +5,17 @@ function getProductComments(id) {
     return getJSONData(PRODUCT_INFO_COMMENTS_URL + id + EXT_TYPE);
 }
 
-function imageCard(src, name, time, active) {
+function imagesCard(active, name, src1,src2) {
     return `
-        <div class="carousel-item ${active? "active":""}" data-bs-interval="${time*10000}">
-            <img src=${src} class="d-block w-50" alt="Illustrative image of ${name}">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Imagen ${time}</h5>
+        <div class="carousel-item ${active? "active":""}" data-bs-interval="${5000}">
+            <div class="row">
+                <img src=${src1} class="rounded d-block w-50" alt="Illustrative image of ${name}">
+                <img src=${src2} class="rounded d-block w-50" alt="Illustrative image of ${name}">
             </div>
         </div>`;
 }
 
-const carouselButton = (number, active) => {
+const carouselButton = (active, number) => {
     return `<button type="button" data-bs-target="#carousel" data-bs-slide-to="${number-1}" aria-label="Slide ${number}" ${active? `class="active"`: ""}></button>`
 }
 const nameField = document.getElementById("name");
@@ -32,16 +32,22 @@ function showProductInfo({id, name, description, cost, currency, soldCount, cate
     descriptionField.innerText = description;
     categoryField.innerText = category;
     soldCountField.innerText = soldCount;
+
+    // si hay cant de img impar le repito la primera al final, en el slider no se nota a no ser que
+    // solo venga una
+    if (images.length % 2 != 0) images.push(images[0]);
     
     // es necesario distinguir la primera porque hay que agregarle la clase "active" a alguna slide y
     // al boton respectivo
-    carouselBtns.innerHTML += carouselButton(1, true);
-    imagesContainer.innerHTML += imageCard(images[0], name, 1, true);
-    
+    carouselBtns.innerHTML += carouselButton(true, 1);
+    imagesContainer.innerHTML += imagesCard(true, name, images[0], images[1]);   
+
+    let slideNumber = 2;
     // agrega el resto de imagenes al carrusel
-    for (let i=1; i<images.length; i++) {
-        carouselBtns.innerHTML += carouselButton(i+1, false);
-        imagesContainer.innerHTML += imageCard(images[i], name, i+1, false);
+    for (let i=2; i<images.length; i+=2) {
+        carouselBtns.innerHTML += carouselButton(false, slideNumber);
+        imagesContainer.innerHTML += imagesCard(false, name, images[i], images[i+1]);
+        slideNumber++;
     }
 }
 
@@ -91,7 +97,7 @@ const userScore = document.getElementById("user-score");
 const userComment = document.getElementById("user-comment")
 document.getElementById("send-review").addEventListener("click", () => {
 
-    // valido no hay campos vacios
+    // valido que no haya campos vacios
     let err = false;
     if (userScore.selectedIndex == 0){
         errorMsg(userScore);
@@ -141,4 +147,6 @@ document.getElementById("send-review").addEventListener("click", () => {
     userComment.value = "";
 });
 
-
+/*
+ lo que llevo mas tiempo fue, 1.formatear el date 2.el carrusel
+*/

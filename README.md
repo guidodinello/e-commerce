@@ -4,14 +4,24 @@ The objective is to learn how to develop a website with all the usual associated
 
 Those functionalities will be listed below:
 
-* ~~login~~.
-* modify user data.
-* list products by category, with filter and sorting functionalities.
-* show product information.
-* see other users comments, with date and rate.
-* comment and rate a product.
-* see related products.
-* add to cart.
-* see cart content and subtotal.
-* select shipping method, addres and payment method.
-* buy
+* <span class="checked"> &#x2714; </span> login. 
+* <span class="checked"> &#x2714; </span> modify user data.
+* <span class="checked"> &#x2714; </span> list products by category, with filter and sorting functionalities.
+* <span class="checked"> &#x2714; </span> show product information.
+* <span class="checked"> &#x2714; </span> see other users comments, with date and rate.
+* <span class="checked"> &#x2714; </span> comment and rate a product.
+* <span class="un-checked"> &#10006; </span> see related products.
+* <span class="un-checked"> &#10006; </span> add to cart.
+* <span class="un-checked"> &#10006; </span> see cart content and subtotal.
+* <span class="un-checked"> &#10006; </span> select shipping method, addres and payment method.
+* <span class="un-checked"> &#10006; </span> buy
+
+
+<style>
+    .checked {
+        color: green;
+    }
+    .un-checked {
+        color: red;
+    }
+</style>
