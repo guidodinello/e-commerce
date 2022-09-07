@@ -2,40 +2,134 @@
 <html lang="es">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>eMercado - Todo lo que busques está aquí</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 
 <body>
-  
-  <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+
+    <main>
+        <div class="container mt-2">
+            <p id="name" class="fs-1">Nombre producto</p>
+            <hr>
+
+            <div class="row">
+
+                <div class="row">
+                    <div class="mb-3">
+                        <p class="fs-5 fw-bold">Precio</p>
+                        <p id="price"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3">
+                        <p class="fs-5 fw-bold">Descripción</p>
+                        <p id="description"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3">
+                        <p class="fs-5 fw-bold">Categoría</p>
+                        <p id="category"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3">
+                        <p class="fs-5 fw-bold">Cantidad de vendidos</p>
+                        <p id="soldCount"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3">
+                        <p class="fs-5 fw-bold">Imágenes Ilustrativas</p>
+                    </div>
+
+                    <div class="row mb-3 justify-content-center">
+                        <div id="carousel" class="justify-content-center carousel carousel-dark slide col-md-10"
+                            data-bs-ride="carousel">
+                            <div id="carousel-buttons" class="carousel-indicators">
+                                <!-- agregar botones de imagenes relacionadas -->
+                            </div>
+                            <div id="illustrative-images-container" class="carousel-inner">
+                                <!-- agregar listado de imagenes relacionadas -->
+                            </div>
+                            <button class="carousel-control-prev" id="prevBtn" type="button" data-bs-target="#carousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" id="nextBtn" type="button" data-bs-target="#carousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="mb-3">
+                            <p class="fs-5 fw-bold">Comentarios</p>
+                            <div class="row">
+                                <div class="list-group" id="comment-list-container">
+                                    <!-- agregar listado de comentarios y calificaciones -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <p class="fs-5 fw-bold">Deja un Comentario!</p>
+
+                        <div class="mb-3">
+                            <p>Tu opinión:</p>
+                            <textarea class="form-control" id="user-comment"></textarea>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="me-sm-2" for="userScore">Tu puntuación:</label>
+                            <select class="form-select" id="user-score">
+                                <option selected>Púntua</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg col-3 mx-auto"
+                            id="send-review">Enviar</button>
+                    </div>
+
+                </div>
+    </main>
+
+    <div id="spinner-wrapper">
+        <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
-  </main>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-  <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="navbar-footer.js"></script>
 
-  <script src="navbar-footer.js"></script>
-
-  <script src="js/init.js"></script>
-  <script src="js/product-info.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/product-info.js"></script>
 </body>
 
 </html>
