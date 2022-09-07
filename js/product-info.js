@@ -85,12 +85,16 @@ function showComments(comments) {
 
 getProductInfo(localStorage.getItem("productID"))
 .then( (response) => {
+    showSpinner();
     showProductInfo(response.data);
+    hideSpinner();
 });
 getProductComments(localStorage.getItem("productID"))
 .then( (response) => {
+    showSpinner();
     showComments(response.data);
-});
+    hideSpinner();
+});    
 
 
 const userScore = document.getElementById("user-score");
@@ -125,12 +129,12 @@ document.getElementById("send-review").addEventListener("click", () => {
     const addZero = (d) => { return (d.length==1)? 0+d : d }
     const hora = (h, pm) => { return pm? parseInt(h)+12: h }
     // me interesan los grupos, por eso siempre es la segunda posicion
-    now = m[2][1] +"-"+               // yyyy-                        
-          addZero(m[0][1]) +"-"+      // mm-          
-          addZero(m[1][1]) +" "+      // dd_            
-          hora(m[3][1],flagPM) +":"+  // hh:                    
-          m[4][1] + ":"+              // mm:        
-          m[5][1];                    // ss
+    now = m[2][1] +"-"+                        // yyyy-                        
+          addZero(m[0][1]) +"-"+               // mm-          
+          addZero(m[1][1]) +" "+               // dd_            
+          addZero(hora(m[3][1],flagPM)) +":"+  // hh:                    
+          m[4][1] + ":"+                       // mm:        
+          m[5][1];                             // ss
     // yyyy-mm-dd hh:mm:ss
 
     // anade el comentario a la lista
