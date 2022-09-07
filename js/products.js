@@ -93,16 +93,6 @@ function sortAndList(criteria, array) {
     listProducts(list_div, currentArray);
 }
 
-function biggerThanZero(input) {
-    if(input.value<0)input.value=0;
-}
-function errorMsg(container) {
-    container.style.border = "1px solid red";
-    setTimeout( () => {
-        container.style.border = "1px solid #ced4da";
-    },3000);
-}
-
 const ASC_BY_PRICE = "asc";
 const DESC_BY_PRICE = "desc";
 const ASC_BY_COUNT = "rel";

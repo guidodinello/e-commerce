@@ -39,3 +39,16 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+/* =============================== */
+function biggerThanZero(input) {
+  if(input.value<0)input.value=0;
+}
+function errorMsg(container) {
+  container.style.border = "1px solid red";
+  setTimeout( () => {
+      container.style.border = "1px solid #ced4da";
+  },3000);
+}
+
+/* =============================== */
