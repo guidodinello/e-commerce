@@ -16,7 +16,7 @@ function imagesCard(active, name, src1,src2) {
 }
 
 const carouselButton = (active, number) => {
-    return `<button type="button" data-bs-target="#carousel" data-bs-slide-to="${number-1}" aria-label="Slide ${number}" ${active? `class="active"`: ""}></button>`
+    return `<button type="button" data-bs-target="#carousel" data-bs-slide-to="${number-1}" aria-label="Slide ${number}" ${active? `class="active"`: ""}></button>`;
 }
 const nameField = document.getElementById("name");
 const priceField = document.getElementById("price");
@@ -122,19 +122,20 @@ document.getElementById("send-review").addEventListener("click", () => {
     // 1 digitos (ejemplo: dia 2)
     // 2 digitos (ejemplo: dia 12)
     // 4 digitos (por el anio)
-    const regexp2d = /(\d{1,4})[,/: ]/g;
+    const regexp2d = /\d{1,4}/g;
     // devuelve un array de arrays [match, group]
-    const m = Array.from(now.matchAll(regexp2d));
+    const m = Array.from(now.match(regexp2d));
+    console.log(m);
 
     const addZero = (d) => { return (d.length==1)? 0+d : d }
     const hora = (h, pm) => { return pm? parseInt(h)+12: h }
     // me interesan los grupos, por eso siempre es la segunda posicion
-    now = m[2][1] +"-"+                        // yyyy-                        
-          addZero(m[0][1]) +"-"+               // mm-          
-          addZero(m[1][1]) +" "+               // dd_            
-          addZero(hora(m[3][1],flagPM)) +":"+  // hh:                    
-          m[4][1] + ":"+                       // mm:        
-          m[5][1];                             // ss
+    now = m[2] +"-"+                        // yyyy-                        
+          addZero(m[0]) +"-"+               // mm-          
+          addZero(m[1]) +" "+               // dd_            
+          addZero(hora(m[3],flagPM)) +":"+  // hh:                    
+          m[4] + ":"+                       // mm:        
+          m[5];                             // ss
     // yyyy-mm-dd hh:mm:ss
 
     // anade el comentario a la lista

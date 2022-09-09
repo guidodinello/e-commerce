@@ -7,7 +7,7 @@ function getProductsByCategoryId(id){
 
 function setProductID(id) {
     localStorage.setItem("productID", id);
-    window.location = "product-info.html"
+    window.location = "product-info.html";
 }
 
 function productCard(p){
@@ -30,7 +30,7 @@ function productCard(p){
                 <p class="mb-1">${p.description}</p>
             </div>
         </div>
-    </div>`
+    </div>`;
 }
 
 function listProducts(container, products){
@@ -46,7 +46,7 @@ function listProducts(container, products){
             <div class="row">
                 <p class="m-0"> No hay productos que cumplan con esas características </p>
             </div>
-        </div>`
+        </div>`;
     }
 }
 
