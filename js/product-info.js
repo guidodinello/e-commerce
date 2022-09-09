@@ -123,7 +123,6 @@ document.getElementById("send-review").addEventListener("click", () => {
     // 2 digitos (ejemplo: dia 12)
     // 4 digitos (por el anio)
     const regexp2d = /\d{1,4}/g;
-    // devuelve un array de arrays [match, group]
     const m = Array.from(now.match(regexp2d));
     console.log(m);
 
