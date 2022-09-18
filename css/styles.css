@@ -201,3 +201,11 @@ a.custom-card:hover {
   width: 30px;
   border-radius: 50%;
 }
+
+.pointer {
+  cursor: pointer;
+}
+
+.margin-2p {
+  margin: 2%;
+}

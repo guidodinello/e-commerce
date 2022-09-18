@@ -7,19 +7,18 @@ const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 
-let showSpinner = function(){
+function showSpinner(){
   const spinner = document.getElementById("spinner-wrapper");
   spinner.style.background = "#ced4da";
   spinner.style.display = "block";
 }
 
-let hideSpinner = function(){
+function hideSpinner(){
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
-let getJSONData = function(url){
+function getJSONData(url){
     let result = {};
-    showSpinner();
     return fetch(url)
     .then(response => {
       if (response.ok) {
@@ -31,13 +30,11 @@ let getJSONData = function(url){
     .then(function(response) {
           result.status = 'ok';
           result.data = response;
-          hideSpinner();
           return result;
     })
     .catch(function(error) {
         result.status = 'error';
         result.data = error;
-        hideSpinner();
         return result;
     });
 }
@@ -52,5 +49,12 @@ function errorMsg(container) {
       container.style.border = "1px solid #ced4da";
   },3000);
 }
-
+function setCatID(id) {
+  localStorage.setItem("catID", id);
+  window.location = "products.html"
+}
+function setProductID(id) {
+  localStorage.setItem("productID", id);
+  window.location = "product-info.html";
+}
 /* =============================== */

@@ -9,7 +9,21 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/modal.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+
+    <script src="js/init.js"></script>
+
+    <div id="spinner-wrapper">
+        <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <script type="text/javascript">showSpinner();</script>
+
 </head>
 
 <body>
@@ -61,14 +75,19 @@
                                 </div>
                                 <div id="illustrative-images-container" class="carousel-inner">
                                     <!-- agregar listado de imagenes relacionadas -->
+                                    <div id="modal" class="modal">
+                                        <span class="close">&times;</span>
+                                        <img class="modal-content" id="modal-img">
+                                        <div id="modal-caption"></div>
+                                    </div>
                                 </div>
-                                <button class="carousel-control-prev" id="prevBtn" type="button" data-bs-target="#carousel"
-                                    data-bs-slide="prev">
+                                <button class="carousel-control-prev" id="prevBtn" type="button"
+                                    data-bs-target="#carousel" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
-                                <button class="carousel-control-next" id="nextBtn" type="button" data-bs-target="#carousel"
-                                    data-bs-slide="next">
+                                <button class="carousel-control-next" id="nextBtn" type="button"
+                                    data-bs-target="#carousel" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </button>
@@ -108,26 +127,48 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-lg col-3 mx-auto"
-                        id="send-review">Enviar</button>
+                    <button type="submit" class="btn btn-primary btn-lg col-3 mx-auto mb-3" id="send-review">Enviar</button>
                 </div>
+
+                <hr>
+                <div class="row">
+                    <p class="fs-5 fw-bold">Produtos Relacionados</p>
+
+                    <div class="row mb-3 bg-secondary bg-gradient rounded justify-content-center">
+                        <div class="row mb-3 mt-3 justify-content-center ">
+                            <div id="carousel-related-products" class="justify-content-center carousel carousel-dark slide"
+                                data-bs-ride="carousel">
+                                <div id="carousel-related-products-buttons" class="carousel-indicators">
+                                    <!-- agregar botones de productos relacionados -->
+                                </div>
+                                <div id="illustrative-images-related-products-container" class="carousel-inner">
+                                    <!-- agregar listado de imagenes productos relacionados -->
+                                </div>
+                                <button class="carousel-control-prev" id="prevBtn" type="button"
+                                    data-bs-target="#carousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" id="nextBtn" type="button"
+                                    data-bs-target="#carousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </main>
 
-    <div id="spinner-wrapper">
-        <div class="lds-ring">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
     <script src="js/bootstrap.bundle.min.js"></script>
 
     <script src="navbar-footer.js"></script>
-
-    <script src="js/init.js"></script>
     <script src="js/product-info.js"></script>
+
+    <script type="text/javascript">hideSpinner();</script>
 </body>
 
 </html>

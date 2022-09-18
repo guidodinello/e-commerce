@@ -5,12 +5,18 @@ function getProductComments(id) {
     return getJSONData(PRODUCT_INFO_COMMENTS_URL + id + EXT_TYPE);
 }
 
-function imagesCard(active, name, src1,src2) {
+// modifique esta agregandole el parametro clickable que decide si la imagen debe rederigir
+// o abrir la vista de la imagen (modal)
+// y el array images
+// set product id lo pase al init.js
+
+//FALTA MOSTRAR EL NOMBRE EN LOS RELATED PRODUCTS
+function imagesCard(active, clickable, [name1, src1, id1, name2, src2, id2]) {
     return `
         <div class="carousel-item ${active? "active":""}" data-bs-interval="${5000}">
             <div class="row">
-                <img src=${src1} class="rounded d-block w-50" alt="Illustrative image of ${name}">
-                <img src=${src2} class="rounded d-block w-50" alt="Illustrative image of ${name}">
+                <img src=${src1} class="rounded d-block w-50 pointer" alt="Illustrative image of ${name1}" onclick=${clickable? `"setProductID(${id1})"` : `"showModal(this)"`}>
+                <img src=${src2} class="rounded d-block w-50 pointer" alt="Illustrative image of ${name2}" onclick=${clickable? `"setProductID(${id2})"` : "showModal(this)"}>
             </div>
         </div>`;
 }
@@ -25,6 +31,10 @@ const categoryField = document.getElementById("category");
 const soldCountField = document.getElementById("soldCount");
 const imagesContainer = document.getElementById("illustrative-images-container");
 const carouselBtns = document.getElementById("carousel-buttons");
+// agregue estos dos nuevos componentes
+const relProdsImgCont = document.getElementById("illustrative-images-related-products-container");
+const relProdsCarBtns = document.getElementById("carousel-related-products-buttons");
+
 
 function showProductInfo({id, name, description, cost, currency, soldCount, category, images, relatedProducts}) {
     nameField.innerText = name;
@@ -40,13 +50,32 @@ function showProductInfo({id, name, description, cost, currency, soldCount, cate
     // es necesario distinguir la primera porque hay que agregarle la clase "active" a alguna slide y
     // al boton respectivo
     carouselBtns.innerHTML += carouselButton(true, 1);
-    imagesContainer.innerHTML += imagesCard(true, name, images[0], images[1]);   
+    imagesContainer.innerHTML += imagesCard(true, false, [name, images[0], id, name, images[1], id]);   
 
     let slideNumber = 2;
     // agrega el resto de imagenes al carrusel
     for (let i=2; i<images.length; i+=2) {
         carouselBtns.innerHTML += carouselButton(false, slideNumber);
-        imagesContainer.innerHTML += imagesCard(false, name, images[i], images[i+1]);
+        imagesContainer.innerHTML += imagesCard(false, false, [name, images[i], id, name, images[i+1], id]);
+        slideNumber++;
+    }
+
+    // esta parte fue agregada
+    // analogo para el carousel de productos relacionados
+    const rp = relatedProducts;
+    if (relatedProducts.length % 2 != 0) relatedProducts.push(rp[0].image);
+    
+    relProdsCarBtns.innerHTML += carouselButton(true, 1);
+    relProdsImgCont.innerHTML += imagesCard(true, true, 
+        [rp[0].name, rp[0].image, rp[0].id,
+        rp[1].name, rp[1].image, rp[1].id]);   
+
+    slideNumber = 2;
+    for (let i=2; i<rp.length; i+=2) {
+        relProdsCarBtns.innerHTML += carouselButton(false, slideNumber);
+        relProdsImgCont.innerHTML += imagesCard(false, true, 
+            [rp[i].name, rp[i].image, rp[i].id,
+            rp[i+1].name, rp[i+1].image, rp[i+1].id]);
         slideNumber++;
     }
 }
@@ -85,16 +114,12 @@ function showComments(comments) {
 
 getProductInfo(localStorage.getItem("productID"))
 .then( (response) => {
-    showSpinner();
     showProductInfo(response.data);
-    hideSpinner();
 });
 getProductComments(localStorage.getItem("productID"))
 .then( (response) => {
-    showSpinner();
     showComments(response.data);
-    hideSpinner();
-});    
+});
 
 
 const userScore = document.getElementById("user-score");
@@ -124,17 +149,17 @@ document.getElementById("send-review").addEventListener("click", () => {
     // 4 digitos (por el anio)
     const regexp2d = /\d{1,4}/g;
     const m = Array.from(now.match(regexp2d));
-    console.log(m);
 
     const addZero = (d) => { return (d.length==1)? 0+d : d }
     const hora = (h, pm) => { return pm? parseInt(h)+12: h }
-    // me interesan los grupos, por eso siempre es la segunda posicion
-    now = m[2] +"-"+                        // yyyy-                        
-          addZero(m[0]) +"-"+               // mm-          
-          addZero(m[1]) +" "+               // dd_            
-          addZero(hora(m[3],flagPM)) +":"+  // hh:                    
-          m[4] + ":"+                       // mm:        
-          m[5];                             // ss
+    
+    const [mm, dd, yyyy, hh, mmin, ss] = m;
+    now = yyyy +"-"+                      // yyyy-                        
+          addZero(mm) +"-"+               // mm-          
+          addZero(dd) +" "+               // dd_            
+          addZero(hora(hh,flagPM)) +":"+  // hh:                    
+          mmin + ":"+                     // mm:        
+          ss;                             // ss
     // yyyy-mm-dd hh:mm:ss
 
     // anade el comentario a la lista
@@ -151,6 +176,13 @@ document.getElementById("send-review").addEventListener("click", () => {
     userComment.value = "";
 });
 
-/*
- lo que llevo mas tiempo fue, 1.formatear el date 2.el carrusel
-*/
+
+function showModal(img) {
+    const modal = document.getElementById("modal");
+    modal.style.display = "block";
+    document.getElementById("modal-img").src = img.src;
+    document.getElementById("modal-caption").innerHTML = img.alt;
+    document.getElementsByClassName("close")[0].onclick = () => {
+        modal.style.display = "none";
+    }
+}

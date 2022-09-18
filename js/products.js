@@ -5,11 +5,6 @@ function getProductsByCategoryId(id){
             });
 }
 
-function setProductID(id) {
-    localStorage.setItem("productID", id);
-    window.location = "product-info.html";
-}
-
 function productCard(p){
     /*
     La estructura se copio de categorires.html (modificando los atributos necesarios) para preservar el estilo de la pagina
@@ -50,60 +45,37 @@ function listProducts(container, products){
     }
 }
 
-function sortProducts(criteria, array){
-    let result = [];
-    switch (criteria) {
-        case ASC_BY_PRICE:
-            result = array.sort((a,b) => {
-                if (a.cost < b.cost){ return -1; }
-                if (a.cost > b.cost){ return 1; }
-                return 0;
-            });
-            break;
-        case DESC_BY_PRICE:
-            result = array.sort((a,b) => {
-                if (a.cost > b.cost){ return -1; }
-                if (a.cost < b.cost){ return 1; }
-                return 0;
-            });
-            break;
-        case ASC_BY_COUNT:
-            result = array.sort((a, b) => {
-                if (a.soldCount > b.soldCount){ return -1; }
-                if (a.soldCount < b.soldCount){ return 1; }
-                return 0;
-            });
-            break;
-    }
-    return result;
+function sortProducts({getAttribute, order}, array) {
+    // ASC => order = 1; DESC => order = -1;
+    return array.sort((a,b) => {
+        if (getAttribute(a) < getAttribute(b)) return -1*order;
+        if (getAttribute(a) > getAttribute(b)) return 1*order;
+        return 0;
+    });
 }
 
-function sortAndList(criteria, array) {
+function sortAndList() {
     // ordena los productos segun cierto criterio y dsps los lista
-    currentCriteria = criteria;
-    if (array != undefined)
-        currentArray = array;
-
     currentArray = sortProducts(currentCriteria, currentArray);
-    if (filtering)
-        currentArray = arrayProducts.filter((item) => {
-            return item.cost < maxCount && item.cost > minCount;
-        });
-
     listProducts(list_div, currentArray);
 }
 
-const ASC_BY_PRICE = "asc";
-const DESC_BY_PRICE = "desc";
-const ASC_BY_COUNT = "rel";
+const ORDER = Object.freeze({
+    ASC : 1,
+    DESC : -1
+});
+// array que guarda la totalidad de los productos
 let arrayProducts = [];
-let currentCriteria = undefined;
-let minCount = NaN;
-let maxCount = NaN;
-let filtering = false;
+// array que guarda los productos en el estado actual (filtrados y/u ordenados)
+let currentArray = [];
+// array que guarda el par atributo_de_compracion y orden asc o desc
+let currentCriteria = {
+                        "getAttribute": (p)=>{return p.cost}, 
+                        "order": ORDER.ASC
+                    };
 
 // obtenemos el contenedor donde va a ir la lista de productos
-let list_div = document.getElementById("product-list-container");
+const list_div = document.getElementById("product-list-container");
 
 document.addEventListener("DOMContentLoaded", function(e){
     // se listan los productos de la categoria seleccionada al cargar la pagina
@@ -114,19 +86,24 @@ document.addEventListener("DOMContentLoaded", function(e){
     });
 
     document.getElementById("sortAsc").addEventListener("click", () => {
-        sortAndList(ASC_BY_PRICE);
+        currentCriteria = {"getAttribute": (p)=>{return p.cost}, "order": ORDER.ASC};
+        sortAndList();
     });
 
     document.getElementById("sortDesc").addEventListener("click", () => {
-        sortAndList(DESC_BY_PRICE);
+        currentCriteria = {"getAttribute": (p)=>{return p.cost}, "order": ORDER.DESC};
+        sortAndList();
     });
 
 	document.getElementById("sortByCount").addEventListener("click", () => {
-        sortAndList(ASC_BY_COUNT);
+        currentCriteria = {"getAttribute": (p)=>{return p.soldCount}, "order": ORDER.DESC};
+        sortAndList();
     });
 
     const maxBound = document.getElementById("rangeFilterCountMax");
-    const minBound = document.getElementById("rangeFilterCountMin");
+    const minBound = document.getElementById("rangeFilterCountMin");  
+    let minCount = NaN;
+    let maxCount = NaN;
 
 	document.getElementById("clearRangeFilter").addEventListener("click", () => {
         minBound.value = "";
@@ -159,10 +136,10 @@ document.addEventListener("DOMContentLoaded", function(e){
             errorMsg(minBound);
             return;
         }
-        currentArray = arrayProducts;
-        filtering = true;
-        sortAndList(currentCriteria, currentArray);
-        filtering = false;
+        currentArray = arrayProducts.filter((item) => {
+            return item.cost < maxCount && item.cost > minCount;
+        });
+        sortAndList();
     });
 
     const search = document.getElementById("search-input");
