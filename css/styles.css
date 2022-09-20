@@ -197,6 +197,7 @@ a.custom-card:hover {
   height: 100%;
 }
 
+/*=========*/
 #nav-usrpicture {
   width: 30px;
   border-radius: 50%;
@@ -206,6 +207,15 @@ a.custom-card:hover {
   cursor: pointer;
 }
 
-.margin-2p {
-  margin: 2%;
+.text-over-img {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.overlay-text-centered-bottom {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

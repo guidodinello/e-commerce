@@ -23,17 +23,17 @@ const navbar = `  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
                 <a id="nav-usremail" class="nav-link" href="my-profile.html"></a>
             </button>
             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
-                <li><a class="dropdown-item active" href="my-profile.html">
-                    Mi Perfil <i class="fas fa-user float-end margin-2p"></i>
+                <li><a class="dropdown-item d-flex justify-content-between" href="my-profile.html">
+                    Mi Perfil <i class="fas fa-user my-auto"></i>
                     </a>
                 </li>
-                <li><a class="dropdown-item" href="cart.html">
-                    Mi Carrito <i class="fas fa-shopping-cart float-end margin-2p"> </i>
+                <li><a class="dropdown-item d-flex justify-content-between" href="cart.html">
+                    Mi Carrito <i class="fas fa-shopping-cart my-auto"> </i>
                     </a>
                 </li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" id="cerrar-sesion" href="index.html">
-                    Cerrar Sesion <i class="fas fa-sign-out-alt float-end margin-2p"> </i>
+                <li><a class="dropdown-item d-flex justify-content-between" id="cerrar-sesion" href="index.html">
+                    Cerrar Sesion <i class="fas fa-sign-out-alt my-auto"> </i>
                     </a>
                 </li>
             </ul>

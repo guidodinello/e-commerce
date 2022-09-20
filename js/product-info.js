@@ -9,16 +9,38 @@ function getProductComments(id) {
 // o abrir la vista de la imagen (modal)
 // y el array images
 // set product id lo pase al init.js
-
-//FALTA MOSTRAR EL NOMBRE EN LOS RELATED PRODUCTS
-function imagesCard(active, clickable, [name1, src1, id1, name2, src2, id2]) {
+function imagesCard(active, name, src1, src2) {
     return `
-        <div class="carousel-item ${active? "active":""}" data-bs-interval="${5000}">
+        <div class="carousel-item ${active? "active":""}" data-bs-interval="5000">
             <div class="row">
-                <img src=${src1} class="rounded d-block w-50 pointer" alt="Illustrative image of ${name1}" onclick=${clickable? `"setProductID(${id1})"` : `"showModal(this)"`}>
-                <img src=${src2} class="rounded d-block w-50 pointer" alt="Illustrative image of ${name2}" onclick=${clickable? `"setProductID(${id2})"` : "showModal(this)"}>
+                <img src=${src1} class="rounded d-block w-50 pointer" alt="Illustrative image of ${name}" onclick="showModal(this)">
+                <img src=${src2} class="rounded d-block w-50 pointer" alt="Illustrative image of ${name}" onclick="showModal(this)">
             </div>
         </div>`;
+}
+
+// ejemplo desestructurar asignando a nuevos nombres de variable
+//const o = {p: 42, q: true};
+//const {p: foo, q: bar} = o;
+function relatedImagesCard(active, {id: id1, name: name1, image: src1}, {id: id2, name: name2, image: src2}) {
+    return `
+    <div class="carousel-item ${active? "active":""}" data-bs-interval="5000">
+        <div class="row">
+            <div class="col text-over-img">
+                <img src=${src1} class="rounded d-block w-100 pointer" alt="Illustrative image of ${name1}" onclick="setProductID(${id1})">
+                <div class="overlay-text-centered-bottom d-none d-md-block">
+                    <h5>${name1}</h5>
+                </div>
+            </div>
+            <div class="col text-over-img">
+                <img src=${src2} class="rounded d-block w-100 pointer" alt="Illustrative image of ${name2}" onclick="setProductID(${id2})">
+                <div class="overlay-text-centered-bottom d-none d-md-block">
+                    <h5>${name2}</h5>
+                </div>
+            </div>
+        </div>
+    </div>`;
+
 }
 
 const carouselButton = (active, number) => {
@@ -50,13 +72,13 @@ function showProductInfo({id, name, description, cost, currency, soldCount, cate
     // es necesario distinguir la primera porque hay que agregarle la clase "active" a alguna slide y
     // al boton respectivo
     carouselBtns.innerHTML += carouselButton(true, 1);
-    imagesContainer.innerHTML += imagesCard(true, false, [name, images[0], id, name, images[1], id]);   
+    imagesContainer.innerHTML += imagesCard(true, name, images[0], images[1]);   
 
     let slideNumber = 2;
     // agrega el resto de imagenes al carrusel
     for (let i=2; i<images.length; i+=2) {
         carouselBtns.innerHTML += carouselButton(false, slideNumber);
-        imagesContainer.innerHTML += imagesCard(false, false, [name, images[i], id, name, images[i+1], id]);
+        imagesContainer.innerHTML += imagesCard(false, name, images[i], images[i+1]);
         slideNumber++;
     }
 
@@ -66,16 +88,12 @@ function showProductInfo({id, name, description, cost, currency, soldCount, cate
     if (relatedProducts.length % 2 != 0) relatedProducts.push(rp[0].image);
     
     relProdsCarBtns.innerHTML += carouselButton(true, 1);
-    relProdsImgCont.innerHTML += imagesCard(true, true, 
-        [rp[0].name, rp[0].image, rp[0].id,
-        rp[1].name, rp[1].image, rp[1].id]);   
+    relProdsImgCont.innerHTML += relatedImagesCard(true, rp[0], rp[1]);   
 
     slideNumber = 2;
     for (let i=2; i<rp.length; i+=2) {
         relProdsCarBtns.innerHTML += carouselButton(false, slideNumber);
-        relProdsImgCont.innerHTML += imagesCard(false, true, 
-            [rp[i].name, rp[i].image, rp[i].id,
-            rp[i+1].name, rp[i+1].image, rp[i+1].id]);
+        relProdsImgCont.innerHTML += relatedImagesCard(false, rp[i], rp[i+1]);
         slideNumber++;
     }
 }
