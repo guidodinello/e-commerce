@@ -10,7 +10,7 @@ Those functionalities will be listed below:
 * <span class="checked"> &#x2714; </span> show product information.
 * <span class="checked"> &#x2714; </span> see other users comments, with date and rate.
 * <span class="checked"> &#x2714; </span> comment and rate a product.
-* <span class="un-checked"> &#10006; </span> see related products.
+* <span class="checked"> &#10006; </span> see related products.
 * <span class="un-checked"> &#10006; </span> add to cart.
 * <span class="un-checked"> &#10006; </span> see cart content and subtotal.
 * <span class="un-checked"> &#10006; </span> select shipping method, addres and payment method.

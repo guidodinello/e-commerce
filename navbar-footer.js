@@ -20,7 +20,7 @@ const navbar = `  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
         <div class="dropdown">
             <button class="btn btn-secondary bg-dark dropdown-toggle flex-row-container py-0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                 <img id="nav-usrpicture" src="">
-                <a id="nav-usremail" class="nav-link" href="my-profile.html"></a>
+                <span id="nav-usremail" class="nav-link"></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
                 <li><a class="dropdown-item d-flex justify-content-between" href="my-profile.html">

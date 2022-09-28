@@ -5,9 +5,7 @@ function getProductComments(id) {
     return getJSONData(PRODUCT_INFO_COMMENTS_URL + id + EXT_TYPE);
 }
 
-// modifique esta agregandole el parametro clickable que decide si la imagen debe rederigir
-// o abrir la vista de la imagen (modal)
-// y el array images
+// se agrego abrir la vista de la imagen (modal) : onclick=showModal(this)
 // set product id lo pase al init.js
 function imagesCard(active, name, src1, src2) {
     return `
@@ -43,8 +41,9 @@ function relatedImagesCard(active, {id: id1, name: name1, image: src1}, {id: id2
 
 }
 
-const carouselButton = (active, number) => {
-    return `<button type="button" data-bs-target="#carousel" data-bs-slide-to="${number-1}" aria-label="Slide ${number}" ${active? `class="active"`: ""}></button>`;
+// se agrego carousel_id para poder diferenciar los dos carouseles de la pagina
+const carouselButton = (active, number, carousel_id) => {
+    return `<button type="button" data-bs-target="#${carousel_id}" data-bs-slide-to="${number-1}" aria-label="Slide ${number}" ${active? `class="active"`: ""}></button>`;
 }
 const nameField = document.getElementById("name");
 const priceField = document.getElementById("price");
@@ -71,13 +70,13 @@ function showProductInfo({id, name, description, cost, currency, soldCount, cate
     
     // es necesario distinguir la primera porque hay que agregarle la clase "active" a alguna slide y
     // al boton respectivo
-    carouselBtns.innerHTML += carouselButton(true, 1);
+    carouselBtns.innerHTML += carouselButton(true, 1, "carousel");
     imagesContainer.innerHTML += imagesCard(true, name, images[0], images[1]);   
 
     let slideNumber = 2;
     // agrega el resto de imagenes al carrusel
     for (let i=2; i<images.length; i+=2) {
-        carouselBtns.innerHTML += carouselButton(false, slideNumber);
+        carouselBtns.innerHTML += carouselButton(false, slideNumber, "carousel");
         imagesContainer.innerHTML += imagesCard(false, name, images[i], images[i+1]);
         slideNumber++;
     }
@@ -87,15 +86,19 @@ function showProductInfo({id, name, description, cost, currency, soldCount, cate
     const rp = relatedProducts;
     if (relatedProducts.length % 2 != 0) relatedProducts.push(rp[0].image);
     
-    relProdsCarBtns.innerHTML += carouselButton(true, 1);
+    relProdsCarBtns.innerHTML += carouselButton(true, 1, "carousel-related-products");
     relProdsImgCont.innerHTML += relatedImagesCard(true, rp[0], rp[1]);   
 
     slideNumber = 2;
     for (let i=2; i<rp.length; i+=2) {
-        relProdsCarBtns.innerHTML += carouselButton(false, slideNumber);
+        relProdsCarBtns.innerHTML += carouselButton(false, slideNumber, "carousel-related-products");
         relProdsImgCont.innerHTML += relatedImagesCard(false, rp[i], rp[i+1]);
         slideNumber++;
     }
+
+    // para que deje mover el carousel aunque solo hayan dos imagenes
+    relProdsCarBtns.innerHTML += carouselButton(false, slideNumber, "carousel-related-products");
+    relProdsImgCont.innerHTML += relatedImagesCard(false, rp[0], rp[1]);
 }
 
 const getStars = (score) => {
@@ -168,7 +171,7 @@ document.getElementById("send-review").addEventListener("click", () => {
     const regexp2d = /\d{1,4}/g;
     const m = Array.from(now.match(regexp2d));
 
-    const addZero = (d) => { return (d.length==1)? 0+d : d }
+    const addZero = (d) => { return (d.length==1)? "0"+d : d }
     const hora = (h, pm) => { return pm? parseInt(h)+12: h }
     
     const [mm, dd, yyyy, hh, mmin, ss] = m;
@@ -194,7 +197,7 @@ document.getElementById("send-review").addEventListener("click", () => {
     userComment.value = "";
 });
 
-
+// se agrego 
 function showModal(img) {
     const modal = document.getElementById("modal");
     modal.style.display = "block";
