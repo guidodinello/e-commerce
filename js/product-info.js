@@ -133,8 +133,10 @@ function showComments(comments) {
     }
 }
 
+let product_info;
 getProductInfo(localStorage.getItem("productID"))
 .then( (response) => {
+    product_info = response.data;
     showProductInfo(response.data);
 });
 getProductComments(localStorage.getItem("productID"))
@@ -207,3 +209,18 @@ function showModal(img) {
         modal.style.display = "none";
     }
 }
+
+document.getElementById("buy-btn").addEventListener("click", () => {
+    var cart = JSON.parse(localStorage.getItem("cartProducts")) || {};
+    if (!(product_info.id in cart)) {
+        cart[product_info.id] = 
+            {
+                name: product_info.name, 
+                count: 1, 
+                unitCost: product_info.cost, 
+                currency: product_info.currency, 
+                image: product_info.images[0]
+            }
+        };
+    localStorage.setItem("cartProducts", JSON.stringify(cart));
+});

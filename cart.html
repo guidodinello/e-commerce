@@ -2,39 +2,98 @@
 <html lang="es">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>eMercado - Todo lo que busques está aquí</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/cart.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 
 <body>
 
-  <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
-    </div>
-  </main>
+    <main>
+        <div class="container">
+            <div class="row text-center p-4">
+                <h2> Carrito de Compras </h2>
+            </div>
+            <div class="row">
+                <h5 class="pb-2"> Artículos a Comprar </h5>
+                <table id="shopping-cart" class="table table-striped table-hover text-center align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Costo</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr> 
+            <div class="row pt-4">
+                <h5 class="pb-2"> Tipo de envío </h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="premium-radio">
+                    <label class="form-check-label" for="premium-radio">
+                        Premium 2 a 5 días (%15)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="express-radio">
+                    <label class="form-check-label" for="express-radio">
+                        Express 5 a 8 días (7%)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="standard-radio">
+                    <label class="form-check-label" for="standard-radio">
+                        Standard 12 a 15 días (5%)
+                    </label>
+                </div>
+            </div>
+            <div class="row pt-4 pb-2">
+                <h5 class="pb-2"> Dirección de envío </h5>
+                <div class="row row-cols-2 gy-3 ge-5 mt-0 ps-0">
+                    <div class="col">
+                        <label for="street" class="form-label">Calle</label>
+                        <input type="text" class="form-control" id="street">
+                    </div>
+                    <div class="col">
+                        <label for="stnumber" class="form-label">Número</label>
+                        <input type="text" class="form-control" id="stnumber">
+                    </div>
+                    <div class="col">
+                        <label for="stcorner" class="form-label">Esquina</label>
+                        <input type="text" class="form-control" id="stcorner">
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </main>
 
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div id="spinner-wrapper">
+        <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
-  </div>
-  <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
-  <script src="navbar-footer.js"></script>
-  
-  <script src="js/init.js"></script>
-  <script src="js/cart.js"></script>
+    <script src="navbar-footer.js"></script>
+
+    <script src="js/init.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 
 </html>
