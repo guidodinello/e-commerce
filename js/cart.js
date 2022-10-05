@@ -7,7 +7,7 @@ function addRow({id: id, name: name, count: count, unitCost: unitCost, currency:
     cartBody.insertAdjacentHTML("beforeend", 
     `<tr>
         <th scope="row">
-            <img class="cart-img" src="${src}">
+            <img class="cart-img pointer" src="${src}" onclick="setProductID(${id})">
         </th>
         <td>${name}</td>
         <td>${curr} ${unitCost}</td>

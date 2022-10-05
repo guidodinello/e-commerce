@@ -26,14 +26,14 @@ function relatedImagesCard(active, {id: id1, name: name1, image: src1}, {id: id2
         <div class="row">
             <div class="col text-over-img">
                 <img src=${src1} class="rounded d-block w-100 pointer" alt="Illustrative image of ${name1}" onclick="setProductID(${id1})">
-                <div class="overlay-text-centered-bottom d-none d-md-block">
-                    <h5>${name1}</h5>
+                <div class="overlay-text-centered-bottom d-none d-md-block p-2">
+                    <h5 class="m-0">${name1}</h5>
                 </div>
             </div>
             <div class="col text-over-img">
                 <img src=${src2} class="rounded d-block w-100 pointer" alt="Illustrative image of ${name2}" onclick="setProductID(${id2})">
-                <div class="overlay-text-centered-bottom d-none d-md-block">
-                    <h5>${name2}</h5>
+                <div class="overlay-text-centered-bottom d-none d-md-block p-2"">
+                    <h5 class="m-0">${name2}</h5>
                 </div>
             </div>
         </div>
@@ -210,11 +210,20 @@ function showModal(img) {
     }
 }
 
+const addedToCartSuccesfully = document.getElementById("added-to-cart-success");
+
 document.getElementById("buy-btn").addEventListener("click", () => {
+    // si no existe un valor de clave cartProducts devuelve un objeto vacio
+    // de lo contrario parsea el string a objeto
     var cart = JSON.parse(localStorage.getItem("cartProducts")) || {};
+
+    // se agrega una sola vez cada producto. Tal vez no es lo que quiero?
+    // no se que es mejor que cada vez que aprete se sume uno al count
+    // o que solo se agregue una vez y dsps el usr modofique la cant desde el carrito
     if (!(product_info.id in cart)) {
         cart[product_info.id] = 
             {
+                id: product_info.id,
                 name: product_info.name, 
                 count: 1, 
                 unitCost: product_info.cost, 
@@ -223,4 +232,10 @@ document.getElementById("buy-btn").addEventListener("click", () => {
             }
         };
     localStorage.setItem("cartProducts", JSON.stringify(cart));
+
+    // muestra el mensaje de exito por 4 segundos
+    addedToCartSuccesfully.classList.remove("d-none");
+    setTimeout(() => {
+        addedToCartSuccesfully.classList.add("d-none")
+    }, 4000);
 });
