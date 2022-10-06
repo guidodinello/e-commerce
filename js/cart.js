@@ -29,7 +29,7 @@ getCart(25801)
     });
 
     const cart = JSON.parse(localStorage.getItem("cartProducts"));
-    for (const prod in cart )
+    for (const prod in cart)
         addRow(cart[prod]);
 });
 

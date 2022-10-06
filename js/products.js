@@ -130,12 +130,13 @@ document.addEventListener("DOMContentLoaded", function(e){
             errorMsg(maxBound);
             err = true;
         }
-        if (err) return;
         if (minCount > maxCount){
             errorMsg(maxBound);
             errorMsg(minBound);
-            return;
+            err = true;
         }
+        if (err) return;
+
         currentArray = arrayProducts.filter((item) => {
             return item.cost < maxCount && item.cost > minCount;
         });
