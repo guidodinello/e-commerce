@@ -15,6 +15,11 @@
 <body>
 
     <main>
+
+        <div id="successAlert" class="alert alert-success d-block d-none" role="alert" style="z-index:999;">
+            ¡Has comprado con éxito!
+        </div>          
+
         <div class="container">
             <div class="row text-center p-4">
                 <h2> Carrito de Compras </h2>
@@ -29,6 +34,7 @@
                             <th scope="col">Costo</th>
                             <th scope="col">Cantidad</th>
                             <th scope="col">Subtotal</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,46 +43,164 @@
                     </tbody>
                 </table>
             </div>
-            <hr> 
-            <div class="row pt-4">
+            <hr>
+            <form class="row pt-4 needs-validation" novalidate>
                 <h5 class="pb-2"> Tipo de envío </h5>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="premium-radio">
+                    <input class="form-check-input" type="radio" name="shippingType" id="premium-radio" required>
                     <label class="form-check-label" for="premium-radio">
                         Premium 2 a 5 días (%15)
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="express-radio">
+                    <input class="form-check-input" type="radio" name="shippingType" id="express-radio" required>
                     <label class="form-check-label" for="express-radio">
                         Express 5 a 8 días (7%)
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="standard-radio">
+                    <input class="form-check-input" type="radio" name="shippingType" id="standard-radio" required>
                     <label class="form-check-label" for="standard-radio">
                         Standard 12 a 15 días (5%)
                     </label>
                 </div>
-            </div>
-            <div class="row pt-4 pb-2">
+            </form>
+            <form class="row pt-4 pb-2 needs-validation" novalidate>
                 <h5 class="pb-2"> Dirección de envío </h5>
                 <div class="row row-cols-2 gy-3 ge-5 mt-0 ps-0">
                     <div class="col">
                         <label for="street" class="form-label">Calle</label>
-                        <input type="text" class="form-control" id="street">
+                        <input type="text" class="form-control" id="street" required>
+                        <div class="invalid-feedback">Ingresa una calle</div>
                     </div>
                     <div class="col">
                         <label for="stnumber" class="form-label">Número</label>
-                        <input type="text" class="form-control" id="stnumber">
+                        <input type="text" class="form-control" id="stnumber" required>
+                        <div class="invalid-feedback">Ingresa un número</div>
                     </div>
                     <div class="col">
                         <label for="stcorner" class="form-label">Esquina</label>
-                        <input type="text" class="form-control" id="stcorner">
+                        <input type="text" class="form-control" id="stcorner" required>
+                        <div class="invalid-feedback">Ingresa una esquina</div>
                     </div>
                 </div>
+            </form>
+            <hr>
+            <div class="row pt-4">
+                <h5 class="pb-2"> Costos </h5>
+                <div class="list-group-item">
+                    <div class="row row-cols-2">
+                        <div class="col-10">
+                            <p class="m-0">Subtotal</p>
+                            <small class="text-muted">Costo unitario del producto por cantidad</small>
+                        </div>
+                        <div class="col-2 d-flex justify-content-center align-self-center">
+                            <p id="subtotal" class="m-0">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="row row-cols-2">
+                        <div class="col-10">
+                            <p class="m-0">Costo de Envío</p>
+                            <small class="text-muted">Según el tipo de envío</small>
+                        </div>
+                        <div class="col-2 d-flex justify-content-center align-self-center">
+                            <p id="shippingCost" class="m-0">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="row row-cols-2">
+                        <div class="col-10">
+                            <p class="m-0">Total ($)</p>
+                        </div>
+                        <div class="col-2 d-flex justify-content-center align-self-center">
+                            <p id="total" class="m-0">0</p>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
             <hr>
+            <div class="row row-cols-2 pt-4">
+                <div class="col">
+                    <h5 class="pb-2"> Forma de Pago </h5>
+                    <div class="row row-cols-2 align-content-center">
+                        <div class="col-6 d-flex">
+                            <small id="paymentMethodmsg" class="m-0 d-flex align-items-center">
+                                No ha seleccionado
+                                <i class="fas fal fa-exclamation-circle ps-2" style="color:rgb(255, 167, 2);"></i>
+                            </small>
+                        </div>
+                        <div class="col-6 float-start">
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#paymentMethodModal">
+                                Seleccionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-flex align-items-center justify-content-end">
+                    <button type="button" class="btn btn-success btn-lg float-end" id="checkoutBtn">
+                        Finalizar Compra
+                        <i class="fas fa-arrow-right ps-3"></i>
+                    </button>
+                </div>
+
+                <div class="modal fade" id="paymentMethodModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de Pago</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form id="pmForm" class="modal-body needs-validation" novalidate>
+                                <div class="form-check">
+                                    <label for="creditCard" class="form-check-label">Tarjeta de Crédito
+                                        <input type="radio" name="paymentMethod" id="creditCard" class="form-check-input" required>
+                                    </label>
+                                </div>
+                                <hr>
+                                <div class="row row-cols-2 gy-2">
+                                    <div class="col-7">
+                                        <label for="creditCardNumber">Número de la Tarjeta</label>
+                                        <input type="numeric" class="form-control mt-1 cc-info" name="creditCardNumber" autocomplete="cc-number" disabled required> 
+                                    </div>
+                                    <div class="col-5">
+                                        <label for="creditCardSecurityCode">Código de Seguridad</label>
+                                        <input type="numeric" class="form-control mt-1 cc-info" name="creditCardSecurityCode" autocomplete="cc-csc" disabled required>
+                                    </div>
+                                    <div class="col-7">
+                                        <label for="creditCardExpirationDate">Vencimiento (MM/AA)</label>
+                                        <input type="numeric" class="form-control mt-1 cc-info" name="creditCardExpirationDate" autocomplete="cc-exp" disabled required>
+                                    </div>
+                                </div>
+                                <div class="form-check">
+                                    <label for="bankTransfer" class="form-check-label mt-4">Transferencia Bancaria
+                                        <input type="radio" name="paymentMethod" id="bankTransfer" class="form-check-input" required>
+                                    </label>
+                                </div>
+                                <hr>
+                                <div class="row row-cols-2 gy-2">
+                                    <div class="col-7">
+                                        <label for="accountNumber">Número de Cuenta</label>
+                                        <input type="numeric" class="form-control mt-1 bt-info" name="accountNumber" autocomplete="cc-number" disabled required>                
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         </div>
     </main>
 
