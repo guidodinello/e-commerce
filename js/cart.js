@@ -106,7 +106,7 @@ document.getElementById("checkoutBtn").addEventListener("click", (e) => {
     Deberá haberse seleccionado una forma de pago.                          | DONE.
     Los campos, para la forma de pago seleccionada, no podrán estar vacíos. | DONE.
     */
-    const valid = true;
+    let valid = true;
     for (const form of forms) {
         if (form.checkValidity() === false) {
             valid = false;
@@ -128,3 +128,6 @@ document.getElementById("checkoutBtn").addEventListener("click", (e) => {
             form.submit();
     }
 });
+
+// TODO 
+// actualizar subtotal, total, etc en function de productos del carrito y tipo de envio
