@@ -37,9 +37,8 @@
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                        </tr>
+                    <tbody id="shopping-cart-body">
+
                     </tbody>
                 </table>
             </div>
@@ -47,19 +46,19 @@
             <form class="row pt-4 needs-validation" novalidate>
                 <h5 class="pb-2"> Tipo de envío </h5>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="shippingType" id="premium-radio" required>
+                    <input class="form-check-input" type="radio" name="shippingType" id="premium-radio" value="0.15" required>
                     <label class="form-check-label" for="premium-radio">
                         Premium 2 a 5 días (%15)
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="shippingType" id="express-radio" required>
+                    <input class="form-check-input" type="radio" name="shippingType" id="express-radio" value="0.07" required>
                     <label class="form-check-label" for="express-radio">
                         Express 5 a 8 días (7%)
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="shippingType" id="standard-radio" required>
+                    <input class="form-check-input" type="radio" name="shippingType" id="standard-radio" value="0.05" required>
                     <label class="form-check-label" for="standard-radio">
                         Standard 12 a 15 días (5%)
                     </label>
@@ -95,7 +94,7 @@
                             <small class="text-muted">Costo unitario del producto por cantidad</small>
                         </div>
                         <div class="col-2 d-flex justify-content-center align-self-center">
-                            <p id="subtotal" class="m-0">0</p>
+                            <span>USD <span id="subtotal" class="m-0">0</span></span>
                         </div>
                     </div>
                 </div>
@@ -106,7 +105,7 @@
                             <small class="text-muted">Según el tipo de envío</small>
                         </div>
                         <div class="col-2 d-flex justify-content-center align-self-center">
-                            <p id="shippingCost" class="m-0">0</p>
+                            <span>USD <span id="shippingCost" class="m-0">0</span></span>
                         </div>
                     </div>
                 </div>
@@ -116,7 +115,7 @@
                             <p class="m-0">Total ($)</p>
                         </div>
                         <div class="col-2 d-flex justify-content-center align-self-center">
-                            <p id="total" class="m-0">0</p>
+                            <span class="fw-bold">USD <span id="total" class="m-0">0</span></span>
                         </div>
                     </div>
 
@@ -214,7 +213,7 @@
     </div>
     <script src="js/bootstrap.bundle.min.js"></script>
 
-    <script src="navbar-footer.js"></script>
+    <script src="js/structural/navbar-footer.js"></script>
 
     <script src="js/init.js"></script>
     <script src="js/cart.js"></script>
