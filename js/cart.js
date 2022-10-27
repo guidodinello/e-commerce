@@ -20,6 +20,16 @@ const errorIcon = document.createElement("i");
 errorIcon.classList.add("fas", "fal", "fa-exclamation-circle", "ps-2");
 errorIcon.style.color = "#ff0602";
 
+// fixer api
+let myHeaders = new Headers();
+myHeaders.append("apikey", "M037182Z51vFScllUEj53oKBeZ4NTQvi");
+let requestOptions = {
+  method: 'GET',
+  redirect: 'follow',
+  headers: myHeaders
+};
+let conversion_rates = {};
+
 function getCart(id) {
     return getJSONData(CART_INFO_URL + id + EXT_TYPE);
 }
@@ -29,19 +39,23 @@ function getCart(id) {
 // me defini el atributo data-old-value para el span asi se que valor habia y puedo sumar la diferencia
 // en vez de sumar devuelta todos los elementos del carrito
 function addRow({ id: id, name: name, count: count, unitCost: unitCost, currency: curr, image: src }) {
+    if (curr != "USD") {
+        unitCost = (unitCost / conversion_rates[curr]).toFixed(0);
+    }        
+    console.log(unitCost);
     cartBody.insertAdjacentHTML("beforeend",
         `<tr id="item-${id}" class="cart-item">
             <th scope="row">
                 <img class="cart-img pointer" src="${src}" onclick="setProductID(${id})">
             </th>
                 <td>${name}</td>
-                <td>${curr} ${unitCost}</td>
+                <td>USD ${unitCost}</td>
                 <td class="d-flex justify-content-center">
                     <input id="input-item-${id}" type="number" class="form-control w-25" aria-label="Product Amount" min="1" value="${count}"
                     oninput="updateSubtotal(this, ${unitCost})">
                 </td>
                 <td class="fw-bold">
-                ${curr} 
+                USD 
                     <span data-oldvalue="${unitCost * count}">${unitCost * count}</span>
                 </td>
                 <td>
@@ -96,7 +110,6 @@ function updateSubtotal(input, unitCost) {
         input.value = 1;
     }
     const span = input.parentNode.nextElementSibling.firstElementChild;
-    console.log(span);
     // se setea el subtotal asociado
     span.innerText = unitCost * input.value;
     // se actualiza el subtotal general
@@ -128,20 +141,6 @@ for (const p of paymenyMethod)
         paymentMethodMsg.appendChild(successIcon);
     });
 
-getCart(25801)
-.then(response => {
-    response.data.articles.forEach(e => {
-        addRow(e);
-    });
-
-    const cart = JSON.parse(localStorage.getItem("cartProducts"));
-    for (const prod in cart)
-        addRow(cart[prod]);
-
-    updateTotalAndShippingCost();
-});
-
-
 document.getElementById("checkoutBtn").addEventListener("click", (e) => {
     /*
     Los campos calle, número y esquina, no podrán estar vacíos.             | DONE.
@@ -172,3 +171,21 @@ document.getElementById("checkoutBtn").addEventListener("click", (e) => {
         }, 3000);
     }
 });
+
+fetch("https://api.apilayer.com/fixer/latest?symbols=UYU%2CEUR%2CBRL%2CARS&base=USD", requestOptions)
+.then(response => { return response.json(); })
+.then(data => { conversion_rates = data.rates; })
+.then(() => { 
+    getCart(25801).then(response => {
+        response.data.articles.forEach(e => {
+            addRow(e);
+        });
+        
+        const cart = JSON.parse(localStorage.getItem("cartProducts"));
+        for (const prod in cart)
+            addRow(cart[prod]);
+        
+        updateTotalAndShippingCost();
+    });
+});
+
