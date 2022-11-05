@@ -57,4 +57,13 @@ function setProductID(id) {
   localStorage.setItem("productID", id);
   window.location = "product-info.html";
 }
+function showModal(img) {
+  const modal = document.getElementById("modal");
+  modal.style.display = "block";
+  document.getElementById("modal-img").src = img.src;
+  document.getElementById("modal-caption").innerHTML = img.alt;
+  document.getElementsByClassName("close")[0].onclick = () => {
+      modal.style.display = "none";
+  }
+}
 /* =============================== */

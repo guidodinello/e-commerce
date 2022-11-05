@@ -13,8 +13,7 @@ function handleCredentialResponse(usr) {
     // https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions
     const responsePayload = decodeJwtResponse(usr.credential);
 
-    localStorage.setItem("usrPicture", responsePayload.picture);
-    localStorage.setItem("usrEmail", responsePayload.email);
+    logInUser(responsePayload.email, responsePayload.picture);
 
     window.location.replace("main.html");
 }
@@ -40,8 +39,7 @@ submit_btn.addEventListener("click", function(event) {
         errors.push([pass, pass_span]);
     }
     if (errors.length === 0) {
-        localStorage.setItem("usrPicture", "img/img_perfil.png");
-        localStorage.setItem("usrEmail", email.value);
+        logInUser(email.value, "img/img_perfil.png");
         window.location.replace("main.html");
     } else {
         setTimeout(()=> { errors.forEach( (err) => {
@@ -50,3 +48,12 @@ submit_btn.addEventListener("click", function(event) {
         })}, 3000);
     }
 });
+
+function logInUser(email, src) {
+    localStorage.setItem("loggedUser", 
+        JSON.stringify({
+            email: email,
+            picture: src,
+        })
+    );
+}

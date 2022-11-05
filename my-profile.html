@@ -2,47 +2,123 @@
 <html lang="es">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>eMercado - Todo lo que busques está aquí</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/modal.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        #userPicture {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            transition: transform .2s;
+        }
+        #userPicture:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+    </style>
+
+    <script src="js/functional/checkUserLogged.js"></script>
+
 </head>
 
 <body>
-  
-  <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
-    </div>
-  </main>
 
-  <script src="js/bootstrap.bundle.min.js"></script>
+    <main>
 
-  <script src="js/structural/navbar-footer.js"></script>
+        <div id="successAlert" class="alert alert-success d-block d-none" role="alert" style="z-index:999;">
+            ¡Datos Actualizados!
+        </div>          
 
-  <script src="js/init.js"></script>
-  <script src="js/my-profile.js"></script>
+        <div class="container d-flex justify-content-center mt-2 w-75">
+            <div class="row" style="width: 80%;">
+                <div class="row row-cols-2">
+                    <div class="col-8">
+                        <p class="fs-1 mb-0 py-3">Perfil</p>
+                        <hr>
+                    </div>
+                    <div class="col-4 text-end pe-5">
+                        <img id="userPicture" src="" alt="your profile picture" onclick="showModal(this)">
+                        <div id="modal" class="modal">
+                            <span class="close">&times;</span>
+                            <img class="modal-content" id="modal-img">
+                            <div id="modal-caption"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="userData" class="row row-cols-2 pt-4 pb-3 needs-validation" novalidate>
+                    <div class="col">
+                        <label for="firstName" class="form-label w-100">Primer Nombre *
+                            <input type="text" name="firstName" id="firstName" class="form-control" required>
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label for="middleName" class="form-label w-100">Segundo Nombre
+                            <input type="text" name="middleName" id="middleName" class="form-control">
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label for="firstSurname" class="form-label w-100">Primer Apellido *
+                            <input type="text" name="firstSurname" id="firstSurname" class="form-control" required>
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label for="secondSurname" class="form-label w-100">Segundo Apellido
+                            <input type="text" name="secondSurname" id="secondSurname" class="form-control">
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label for="userEmail" class="form-label w-100">Email *
+                            <input type="email" name="userEmail" id="userEmail" class="form-control" required>
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label for="userPicture" class="form-label w-100">Imagen de perfil
+                            <input type="file" class="form-control" id="userPictureInput" name="userPicture"
+                                aria-label="Upload profile picture">
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label for="telNumber" class="form-label w-100">Teléfono de contacto *
+                            <input type="numeric" name="telNumber" id="telNumber" class="form-control" required>
+                        </label>
+                    </div>
+                </form>
+                <hr>
+                <div class="row row-cols-2 mt-3">
+                    <div class="col-4">
+                        <button id="saveChangesBtn" type="button" class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/structural/navbar-footer.js"></script>
+    <script src="js/my-profile.js"></script>
 </body>
 
 </html>

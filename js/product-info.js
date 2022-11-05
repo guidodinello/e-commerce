@@ -199,17 +199,6 @@ document.getElementById("send-review").addEventListener("click", () => {
     userComment.value = "";
 });
 
-// se agrego 
-function showModal(img) {
-    const modal = document.getElementById("modal");
-    modal.style.display = "block";
-    document.getElementById("modal-img").src = img.src;
-    document.getElementById("modal-caption").innerHTML = img.alt;
-    document.getElementsByClassName("close")[0].onclick = () => {
-        modal.style.display = "none";
-    }
-}
-
 const addedToCartSuccesfully = document.getElementById("added-to-cart-success");
 
 document.getElementById("buy-btn").addEventListener("click", () => {

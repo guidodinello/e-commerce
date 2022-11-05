@@ -42,7 +42,7 @@ function addRow({ id: id, name: name, count: count, unitCost: unitCost, currency
     if (curr != "USD") {
         unitCost = (unitCost / conversion_rates[curr]).toFixed(0);
     }        
-    console.log(unitCost);
+    //console.log(unitCost);
     cartBody.insertAdjacentHTML("beforeend",
         `<tr id="item-${id}" class="cart-item">
             <th scope="row">
@@ -151,7 +151,7 @@ document.getElementById("checkoutBtn").addEventListener("click", (e) => {
     */
     let valid = true;
     for (const form of forms) {
-        if (form.checkValidity() === false) {
+        if (!form.checkValidity()) {
             valid = false;
             // formulario de metodo de pago
             if (form.id === "pmForm") {

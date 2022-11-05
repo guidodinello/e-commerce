@@ -58,12 +58,19 @@ const footer = `  <footer class="text-muted">
 </footer>`
 
 document.getElementsByTagName("main")[0].insertAdjacentHTML("afterend", footer);
+const userInfo = JSON.parse(localStorage.getItem("loggedUser"));
 
-const picture = document.getElementById("nav-usrpicture");
-picture.src = localStorage.getItem("usrPicture");
-document.getElementById("nav-usremail").innerText = localStorage.getItem("usrEmail");
+const navUsrPicture = document.getElementById("nav-usrpicture");
+const navUsrEmail = document.getElementById("nav-usremail");
+
+if (userInfo === null) {
+    navUsrPicture.src = "img/img_perfil.png";
+    navUsrEmail.innerText = "Iniciar Sesión";
+} else {
+    navUsrPicture.src = userInfo.picture;
+    navUsrEmail.innerText = userInfo.email;
+}
 
 document.getElementById("cerrar-sesion").addEventListener("click", () => {
-    localStorage.removeItem("usrPicture");
-    localStorage.removeItem("usrEmail");
+    localStorage.removeItem("loggedUser");
 });
