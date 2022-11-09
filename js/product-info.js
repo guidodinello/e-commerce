@@ -52,12 +52,11 @@ const categoryField = document.getElementById("category");
 const soldCountField = document.getElementById("soldCount");
 const imagesContainer = document.getElementById("illustrative-images-container");
 const carouselBtns = document.getElementById("carousel-buttons");
-// agregue estos dos nuevos componentes
 const relProdsImgCont = document.getElementById("illustrative-images-related-products-container");
 const relProdsCarBtns = document.getElementById("carousel-related-products-buttons");
 
 
-function showProductInfo({id, name, description, cost, currency, soldCount, category, images, relatedProducts}) {
+function showProductInfo({name, description, cost, currency, soldCount, category, images, relatedProducts}) {
     nameField.innerText = name;
     priceField.innerText = currency + " " + cost;
     descriptionField.innerText = description;
@@ -70,14 +69,14 @@ function showProductInfo({id, name, description, cost, currency, soldCount, cate
     
     // es necesario distinguir la primera porque hay que agregarle la clase "active" a alguna slide y
     // al boton respectivo
-    carouselBtns.innerHTML += carouselButton(true, 1, "carousel");
-    imagesContainer.innerHTML += imagesCard(true, name, images[0], images[1]);   
+    carouselBtns.insertAdjacentHTML("beforeend", carouselButton(true, 1, "carousel"));
+    imagesContainer.insertAdjacentHTML("beforeend", imagesCard(true, name, images[0], images[1]));   
 
     let slideNumber = 2;
     // agrega el resto de imagenes al carrusel
     for (let i=2; i<images.length; i+=2) {
-        carouselBtns.innerHTML += carouselButton(false, slideNumber, "carousel");
-        imagesContainer.innerHTML += imagesCard(false, name, images[i], images[i+1]);
+        carouselBtns.insertAdjacentHTML("beforeend", carouselButton(false, slideNumber, "carousel"));
+        imagesContainer.insertAdjacentHTML("beforeend", imagesCard(false, name, images[i], images[i+1]));
         slideNumber++;
     }
 
@@ -86,19 +85,19 @@ function showProductInfo({id, name, description, cost, currency, soldCount, cate
     const rp = relatedProducts;
     if (relatedProducts.length % 2 != 0) relatedProducts.push(rp[0].image);
     
-    relProdsCarBtns.innerHTML += carouselButton(true, 1, "carousel-related-products");
-    relProdsImgCont.innerHTML += relatedImagesCard(true, rp[0], rp[1]);   
+    relProdsCarBtns.insertAdjacentHTML("beforeend", carouselButton(true, 1, "carousel-related-products"));
+    relProdsImgCont.insertAdjacentHTML("beforeend", relatedImagesCard(true, rp[0], rp[1]));   
 
     slideNumber = 2;
     for (let i=2; i<rp.length; i+=2) {
-        relProdsCarBtns.innerHTML += carouselButton(false, slideNumber, "carousel-related-products");
-        relProdsImgCont.innerHTML += relatedImagesCard(false, rp[i], rp[i+1]);
+        relProdsCarBtns.insertAdjacentHTML("beforeend", carouselButton(false, slideNumber, "carousel-related-products"));
+        relProdsImgCont.insertAdjacentHTML("beforeend", relatedImagesCard(false, rp[i], rp[i+1]));
         slideNumber++;
     }
 
     // para que deje mover el carousel aunque solo hayan dos imagenes
-    relProdsCarBtns.innerHTML += carouselButton(false, slideNumber, "carousel-related-products");
-    relProdsImgCont.innerHTML += relatedImagesCard(false, rp[0], rp[1]);
+    relProdsCarBtns.insertAdjacentHTML("beforeend", carouselButton(false, slideNumber, "carousel-related-products"));
+    relProdsImgCont.insertAdjacentHTML("beforeend", relatedImagesCard(false, rp[0], rp[1]));
 }
 
 const getStars = (score) => {
@@ -129,7 +128,7 @@ function commentCard({product, score, description, user, dateTime}) {
 const commentsContainer = document.getElementById("comment-list-container");
 function showComments(comments) {
     for (const c of comments) {
-        commentsContainer.innerHTML += commentCard(c);
+        commentsContainer.insertAdjacentHTML("beforeend", commentCard(c));
     }
 }
 
@@ -186,13 +185,14 @@ document.getElementById("send-review").addEventListener("click", () => {
     // yyyy-mm-dd hh:mm:ss
 
     // anade el comentario a la lista
-    commentsContainer.innerHTML += commentCard({
+    commentsContainer.inserAdjacentHTML("beforeend", commentCard({
         "product": null, 
         "score": userScore.value, 
         "description": userComment.value, 
         "user": localStorage.getItem("usrEmail"), 
         "dateTime": now
-    });
+    })
+    );
 
     // reseteo los campos
     userScore.selectedIndex = 0;

@@ -32,16 +32,16 @@ function listProducts(container, products){
     // genera el contenedor de cada producto y lo agrega al div lista de productos
     container.innerHTML = "";
     for (let product of products) {
-        container.innerHTML += productCard(product);
+        container.insertAdjacentHTML("beforeend", productCard(product));
     }
     // si no hay productos despliega un cartel avisando
     if (products.length === 0) {
-        container.innerHTML +=  `
+        container.insertAdjacentHTML("beforeend",`
         <div class="list-group-item list-group-item-action cursor-active mt-3">
             <div class="row">
                 <p class="m-0"> No hay productos que cumplan con esas características </p>
             </div>
-        </div>`;
+        </div>`);
     }
 }
 
@@ -77,80 +77,77 @@ let currentCriteria = {
 // obtenemos el contenedor donde va a ir la lista de productos
 const list_div = document.getElementById("product-list-container");
 
-document.addEventListener("DOMContentLoaded", function(e){
-    // se listan los productos de la categoria seleccionada al cargar la pagina
-    getProductsByCategoryId(localStorage.getItem("catID")).then( (response) => {
-            arrayProducts = response.products;
-            currentArray = arrayProducts;
-            listProducts(list_div, arrayProducts);
-    });
-
-    document.getElementById("sortAsc").addEventListener("click", () => {
-        currentCriteria = {"getAttribute": (p)=>{return p.cost}, "order": ORDER.ASC};
-        sortAndList();
-    });
-
-    document.getElementById("sortDesc").addEventListener("click", () => {
-        currentCriteria = {"getAttribute": (p)=>{return p.cost}, "order": ORDER.DESC};
-        sortAndList();
-    });
-
-	document.getElementById("sortByCount").addEventListener("click", () => {
-        currentCriteria = {"getAttribute": (p)=>{return p.soldCount}, "order": ORDER.DESC};
-        sortAndList();
-    });
-
-    const maxBound = document.getElementById("rangeFilterCountMax");
-    const minBound = document.getElementById("rangeFilterCountMin");  
-    let minCount = NaN;
-    let maxCount = NaN;
-
-	document.getElementById("clearRangeFilter").addEventListener("click", () => {
-        minBound.value = "";
-        maxBound.value = "";
-
-        minCount = NaN;
-        maxCount = NaN;
-
+// se listan los productos de la categoria seleccionada al cargar la pagina
+getProductsByCategoryId(localStorage.getItem("catID")).then( (response) => {
+        arrayProducts = response.products;
         currentArray = arrayProducts;
-        listProducts(list_div, currentArray);
+        listProducts(list_div, arrayProducts);
+});
+
+document.getElementById("sortAsc").addEventListener("click", () => {
+    currentCriteria = {"getAttribute": (p)=>{return p.cost}, "order": ORDER.ASC};
+    sortAndList();
+});
+
+document.getElementById("sortDesc").addEventListener("click", () => {
+    currentCriteria = {"getAttribute": (p)=>{return p.cost}, "order": ORDER.DESC};
+    sortAndList();
+});
+
+document.getElementById("sortByCount").addEventListener("click", () => {
+    currentCriteria = {"getAttribute": (p)=>{return p.soldCount}, "order": ORDER.DESC};
+    sortAndList();
+});
+
+const maxBound = document.getElementById("rangeFilterCountMax");
+const minBound = document.getElementById("rangeFilterCountMin");  
+let minCount = NaN;
+let maxCount = NaN;
+
+document.getElementById("clearRangeFilter").addEventListener("click", () => {
+    minBound.value = "";
+    maxBound.value = "";
+
+    minCount = NaN;
+    maxCount = NaN;
+
+    currentArray = arrayProducts;
+    listProducts(list_div, currentArray);
+});
+
+document.getElementById("rangeFilterCount").addEventListener("click", () => {
+    //devuelve NaN si "" o undefined
+    minCount = parseInt(minBound.value);
+    maxCount = parseInt(maxBound.value);
+
+    let err = false;
+    if (isNaN(minCount)){
+        errorMsg(minBound);
+        err = true;
+    }
+    if (isNaN(maxCount)){
+        errorMsg(maxBound);
+        err = true;
+    }
+    if (minCount > maxCount){
+        errorMsg(maxBound);
+        errorMsg(minBound);
+        err = true;
+    }
+    if (err) return;
+
+    currentArray = arrayProducts.filter((item) => {
+        return item.cost < maxCount && item.cost > minCount;
     });
+    sortAndList();
+});
 
-	document.getElementById("rangeFilterCount").addEventListener("click", () => {
-        //devuelve NaN si "" o undefined
-        minCount = parseInt(minBound.value);
-        maxCount = parseInt(maxBound.value);
-
-        let err = false;
-        if (isNaN(minCount)){
-            errorMsg(minBound);
-            err = true;
-        }
-        if (isNaN(maxCount)){
-            errorMsg(maxBound);
-            err = true;
-        }
-        if (minCount > maxCount){
-            errorMsg(maxBound);
-            errorMsg(minBound);
-            err = true;
-        }
-        if (err) return;
-
-        currentArray = arrayProducts.filter((item) => {
-            return item.cost < maxCount && item.cost > minCount;
-        });
-        sortAndList();
+const search = document.getElementById("search-input");
+search.addEventListener("input", () => {
+    const searchText = search.value.toLowerCase();
+    currentArray = arrayProducts.filter((element) => {
+        return  element.name.toLowerCase().includes(searchText) ||
+                element.description.toLowerCase().includes(searchText);  
     });
-
-    const search = document.getElementById("search-input");
-    search.addEventListener("input", () => {
-        const searchText = search.value.toLowerCase();
-        currentArray = arrayProducts.filter((element) => {
-            return  element.name.toLowerCase().includes(searchText) ||
-                    element.description.toLowerCase().includes(searchText);  
-        });
-        listProducts(list_div, currentArray);
-    });
-
+    listProducts(list_div, currentArray);
 });

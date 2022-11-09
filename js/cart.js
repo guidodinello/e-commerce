@@ -42,7 +42,6 @@ function addRow({ id: id, name: name, count: count, unitCost: unitCost, currency
     if (curr != "USD") {
         unitCost = (unitCost / conversion_rates[curr]).toFixed(0);
     }        
-    //console.log(unitCost);
     cartBody.insertAdjacentHTML("beforeend",
         `<tr id="item-${id}" class="cart-item">
             <th scope="row">
@@ -142,13 +141,6 @@ for (const p of paymenyMethod)
     });
 
 document.getElementById("checkoutBtn").addEventListener("click", (e) => {
-    /*
-    Los campos calle, número y esquina, no podrán estar vacíos.             | DONE.
-    Deberá estar seleccionada la forma de envío.                            | DONE.
-    La cantidad para cada artículo deberá estar definida y ser mayor a 0.   | DONE, se maneja en el evento input.
-    Deberá haberse seleccionado una forma de pago.                          | DONE.
-    Los campos, para la forma de pago seleccionada, no podrán estar vacíos. | DONE.
-    */
     let valid = true;
     for (const form of forms) {
         if (!form.checkValidity()) {
