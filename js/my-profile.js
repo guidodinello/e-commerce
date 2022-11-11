@@ -17,10 +17,6 @@ const fileReader = new FileReader();
 
 function loadUserInfo() {
     const user = JSON.parse(localStorage.getItem("loggedUser"));
-    
-    //const userDOMinfo = [firstName, middleName, surname, secondSurname, email, telephone, picture];
-    // for (const input of userDOMinfo) {
-    //     input.value = user[input.id] || "";
 
     firstName.value = user.name || "";
     middleName.value = user.middleName || "";
@@ -31,7 +27,7 @@ function loadUserInfo() {
     picture.src = user.picture || "";
 }
 
-function updateUserInfo({name, middleName, lastname, secondLastname, email, telephone, newPicture}) {
+function updateUserInfo({name, middleName, lastname, secondLastname, email, telephone, picture}) {
     var user = JSON.parse(localStorage.getItem("loggedUser"));
 
     user.name = name;
@@ -40,9 +36,7 @@ function updateUserInfo({name, middleName, lastname, secondLastname, email, tele
     user.secondLastname = secondLastname;
     user.email = email;
     user.telephone = telephone;
-    user.picture = newPicture;
-
-    // podria pasarle un objeto a la funcion, recorrer con un for los atributos de user y si el atributo del objeto pasado como parametro contiene un valor para ese atributo actualizarlo, sino no.
+    user.picture = picture;
 
     localStorage.setItem("loggedUser", JSON.stringify(user));
 } 
@@ -67,15 +61,15 @@ updateButton.addEventListener("click", () => {
         secondLastname: secondSurname.value,
         email: email.value,
         telephone: telephone.value,
-        newPicture: picture.src
+        picture: picture.src
     });
-    loadUserInfo();
+
+    // por consistencia visual, para recargar los datos del navbar
+    window.location.reload();
 
     alert.classList.remove("d-none");
     setTimeout( () => {
         alert.classList.add("d-none");
-        // por consistencia visual, para recargar los datos del navbar
-        window.location.reload();
     }, 1000);
 });
 
