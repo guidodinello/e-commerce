@@ -28,7 +28,7 @@ let requestOptions = {
   redirect: 'follow',
   headers: myHeaders
 };
-let conversion_rates = {};
+let conversion_rates = { "UYU": 40};
 
 function getCart(id) {
     return getJSONData(CART_INFO_URL + id + EXT_TYPE);
@@ -156,28 +156,63 @@ document.getElementById("checkoutBtn").addEventListener("click", (e) => {
     }
     if (valid) {
         alert.classList.remove("d-none");
+
+        const xhr = new XMLHttpRequest();
+        const completeForm = new FormData();
+
+        //open the request
+        xhr.open('POST', CART_BUY_URL);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        for (const form of forms) {
+            const formData = new FormData(form);
+            for (const [key, value] of formData.entries()) {
+                completeForm.append(key, value);
+            }
+        }
+        //send the form data
+        const json = Object.fromEntries(completeForm);
+
+        // agregamos los productos comprados
+        json["products"] = Object.values(JSON.parse(localStorage.getItem("cartProducts")));
+
+        // identificamos al usuario que realizo la compra
+        json["email"] = JSON.parse(localStorage.getItem("loggedUser")).email;
+
+        xhr.send(JSON.stringify(json));
+
         setTimeout( () => {
-            for (const form of forms) 
-                form.submit();
             window.location.replace("main.html");
         }, 3000);
     }
 });
 
-fetch("https://api.apilayer.com/fixer/latest?symbols=UYU%2CEUR%2CBRL%2CARS&base=USD", requestOptions)
-.then(response => { return response.json(); })
-.then(data => { conversion_rates = data.rates; })
-.then(() => { 
-    getCart(25801).then(response => {
-        response.data.articles.forEach(e => {
-            addRow(e);
-        });
+// fetch("https://api.apilayer.com/fixer/latest?symbols=UYU%2CEUR%2CBRL%2CARS&base=USD", requestOptions)
+// .then(response => { return response.json(); })
+// .then(data => { conversion_rates = data.rates; })
+// .then(() => { 
+//     getCart(25801).then(response => {
+//         response.data.articles.forEach(e => {
+//             addRow(e);
+//         });
         
-        const cart = JSON.parse(localStorage.getItem("cartProducts"));
-        for (const prod in cart)
-            addRow(cart[prod]);
+//         const cart = JSON.parse(localStorage.getItem("cartProducts"));
+//         for (const prod in cart)
+//             addRow(cart[prod]);
         
-        updateTotalAndShippingCost();
+//         updateTotalAndShippingCost();
+//     });
+// });
+
+getCart(25801).then(response => {
+    response.data.articles.forEach(e => {
+        addRow(e);
     });
+    
+    const cart = JSON.parse(localStorage.getItem("cartProducts"));
+    for (const prod in cart)
+        addRow(cart[prod]);
+    
+    updateTotalAndShippingCost();
 });
 
