@@ -14,8 +14,7 @@ Those functionalities will be listed below:
 * <span class="checked"> &#x2714; </span> add to cart.
 * <span class="checked"> &#x2714; </span> see cart content and subtotal.
 * <span class="checked"> &#x2714; </span> select shipping method, addres and payment method.
-* <span class="un-checked"> &#10006; </span> buy
-
+* <span class="checked"> &#x2714; </span> buy
 
 <style>
     .checked {
